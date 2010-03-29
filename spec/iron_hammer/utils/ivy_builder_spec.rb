@@ -180,7 +180,6 @@ module IronHammer
           doc.elements['//Reference[starts_with(@Include, "ICSharpCode.SharpZipLib")]/SpecificVersion'].text.should == 'false'
         end
 
-
         it "should modify Version" do
           @ivy.modify_csproj
           xml = FileSystem.read_file(@dir, 'abc.csproj')
@@ -213,8 +212,14 @@ module IronHammer
             hint_path.text.should match /^\.\.\\\.\.\\Libraries\\abc.dll/
           end
         end
-      end
 
+        it "should not leave single quotes inside files" do
+          @ivy.modify_csproj
+          xml = FileSystem.read_file(@dir, 'abc.csproj')
+          doc = REXML::Document.new xml
+          doc.to_s.should_not match "='"
+        end
+      end
     end
 
   end
