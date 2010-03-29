@@ -213,7 +213,7 @@ module IronHammer
           end
         end
 
-        it "should not leave single quotes inside files" do
+        it "should not leave single quotes" do
           @ivy.modify_csproj
           xml = FileSystem.read_file(@dir, 'abc.csproj')
           doc = REXML::Document.new xml
