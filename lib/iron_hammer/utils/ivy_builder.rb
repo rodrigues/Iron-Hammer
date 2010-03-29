@@ -13,6 +13,7 @@ module IronHammer
         'latest.build' => '\\1.\\2.\\3.+',
         'specific' => '\\1.\\2.\\3.\\4'
       }
+
       def initialize params={}
         @project = params[:project] || raise('You must specify a project')
         @config = params[:config] || raise('You must specify a config')
@@ -84,7 +85,7 @@ module IronHammer
           end
           reference.elements['SpecificVersion'] = REXML::Element.new('SpecificVersion').add_text('false') unless reference.elements['SpecificVersion']
           reference.elements['HintPath'] = REXML::Element.new('HintPath').
-                add_text([relative, "#{artifact}"].flatten.patheticalize)
+            add_text([relative, "#{artifact}"].flatten.patheticalize)
         end
 
         FileSystem.write! :path => @project.path, :name => @project.csproj, :content => doc.to_s
@@ -93,7 +94,7 @@ module IronHammer
       def self.rename_artifacts
         Dir["Libraries/*.{dll,exe}"].each do |file|
           file.scan(/Libraries\/(.*)-([\d\.]*)\.(.*)/) do |name, version, extension|
-              FileUtils.mv(file, "Libraries\\#{name}.#{extension}")
+            FileUtils.mv(file, "Libraries\\#{name}.#{extension}")
           end
         end
       end

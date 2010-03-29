@@ -9,6 +9,11 @@ module IronHammer
     ENVIRONMENT = 'local'
     SYSTEM_ROOT = 'c:\\Windows'
     PROGRAM_FILES = 'c:\\Program Files'
+    REXML::Attribute.class_eval( %q^
+          def to_string
+            %Q[#@expanded_name="#{to_s().gsub(/\"/, '&quot;')}"]
+         end
+      ^ )
   end unless defined? IronHammer::Defaults
 end
 

@@ -7,12 +7,9 @@ module IronHammer
       attr_accessor :ivy_settings
       attr_accessor :retrieve_version
 
-
-
       def self.builder_for project
         IvyBuilder.new :config => instance, :project => project
       end
-
 
       def self.instance
         @@instance ||= IvyConfiguration.new
