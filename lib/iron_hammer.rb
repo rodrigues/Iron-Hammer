@@ -3,6 +3,7 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 module IronHammer
   module Defaults
+    require 'rexml/document'
     CONFIGURATION_RUN = 'Release'
     DELIVERY_DIRECTORY = 'delivery'
     TEST_CONFIG = 'LocalTestRun.testrunconfig'
