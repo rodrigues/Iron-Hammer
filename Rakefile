@@ -15,6 +15,9 @@ $hoe = Hoe.spec 'iron_hammer' do
   self.rubyforge_name       = self.name
   self.extra_deps           = [['rubyzip2','>= 2.0.1'],
                                ['builder', '>= 2.1.2']]
+  self.extra_dev_deps       = [['rake', '>= 0.8.7'],
+                               ['rspec', '>= 1.3.0'],
+                               ['newgem', '>= 1.5.3']]
   self.version              = '1.1.1'
 end
 
