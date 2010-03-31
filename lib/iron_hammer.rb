@@ -3,18 +3,14 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 module IronHammer
   module Defaults
-    require 'rexml/document'
     CONFIGURATION_RUN = 'Release'
     DELIVERY_DIRECTORY = 'delivery'
     TEST_CONFIG = 'LocalTestRun.testrunconfig'
     ENVIRONMENT = 'local'
     SYSTEM_ROOT = 'c:\\Windows'
     PROGRAM_FILES = 'c:\\Program Files'
-    REXML::Attribute.class_eval( %q^
-          def to_string
-            %Q[#@expanded_name="#{to_s().gsub(/\"/, '&quot;')}"]
-         end
-      ^ )
+
+    require 'iron_hammer/ext/rexml_ext'
   end unless defined? IronHammer::Defaults
 end
 
