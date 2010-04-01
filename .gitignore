@@ -2,3 +2,4 @@ temp/**
 **/*.*~
 pkg/**
 *~
+.DS_Store
