@@ -12,6 +12,7 @@ describe FileSystemEntry do
     empty_file_at 'file1.txt'
     empty_file_at 'file2.txt'
 
+    puts FileSystemEntry.instance_methods
     inside_sandbox do
       entry = FileSystemEntry.at '.'
       entry.contents.select {|e| e.name == 'file1.txt' }.should_not be_empty

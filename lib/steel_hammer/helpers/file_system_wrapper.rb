@@ -3,7 +3,7 @@ module SteelHammer::Helpers::FileSystemWrapper
     attr_accessor :path
 
     def self.at(path)
-      #Dir[File.join(path, '*')].collect {|f| FileSystemEntry.new f }
+      @current_directory = Dir.pwd
       FileSystemEntry.new path
     end
 
@@ -13,6 +13,10 @@ module SteelHammer::Helpers::FileSystemWrapper
 
     def name
       @name ||= self.path.gsub(/\\+/, "/").split("/").last
+    end
+
+    def contents
+      Dir[File.join(@path, '*')].collect {|f| FileSystemEntry.new f }
     end
   end
 
