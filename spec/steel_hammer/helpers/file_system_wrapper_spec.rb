@@ -60,9 +60,7 @@ describe FileSystemEntry do
 
       it "should return an empty string when the file is empty" do
         empty_file_at 'file2.txt'
-        inside_sandbox do
-          FileSystemEntry.at('file2.txt').content.should == ''
-        end
+        inside_sandbox { FileSystemEntry.at('file2.txt').content.should == '' }
       end
     end
 

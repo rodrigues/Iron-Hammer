@@ -12,12 +12,16 @@ describe Anvil do
   end
 
   it "should provide a list with all files" do
+    fs = mock(FileSystemEntry)
+    FileSystemEntry.
+      should_receive(:at).
+      with('location').
+      and_return(fs)
+
     anvil = Anvil.at "location"
 
-    # TODO - Fix this test
-    FileSystemWrapper.
-      should_receive(:contents_of).
-      with("location").
+    fs.
+      should_receive(:contents).
       and_return(:expected_result)
 
     anvil.contents.should == :expected_result

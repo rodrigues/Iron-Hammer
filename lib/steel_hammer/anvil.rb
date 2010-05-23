@@ -4,6 +4,6 @@ class SteelHammer::Anvil
   steel_hammer_include_instance_methods
 
   def initialize path
-    @path = path
+    @file_system_entry = FileSystemEntry.at(path)
   end
 end
