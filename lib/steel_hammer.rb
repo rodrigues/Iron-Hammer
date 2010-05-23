@@ -6,11 +6,9 @@ module SteelHammer
 
   def include_class_methods
     name = []
-    "#{self.name.gsub('::', '/')}".
-      scan(/([A-Z][^A-Z]*)/) do |e| 
-        e.each { |x| name << "_#{x.downcase}" } 
-      end
-    require "#{name.inject('', &:+)[1..-1]}/class_methods".gsub('/_', '/')
+    self.name.scan(/([A-Z][^A-Z]*)/) { |e| e.each { |x| name << "_#{x.downcase}" } } 
+
+    require "#{name.inject('', &:+)[1..-1]}/class_methods".gsub(%r(/_|::_), '/')
 
     eval("include #{self.name}::ClassMethods")
   end
