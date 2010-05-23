@@ -1,7 +1,7 @@
 module SteelHammer::Anvil::ClassMethods
   module Methods
     def at(path)
-      Anvil.new
+      Anvil.new path
     end
   end
 

@@ -11,6 +11,7 @@ begin
     gem.homepage = "http://github.com/macskeptic/steel_hammer"
     gem.authors = ["MACSkeptic (Mozair AC)"]
     gem.add_development_dependency "rspec", ">= 1.2.9"
+    #gem.add_development_dependency "awesomeness", "> 9000"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
