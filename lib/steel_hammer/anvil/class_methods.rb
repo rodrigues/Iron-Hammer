@@ -1,15 +1,11 @@
-module SteelHammer
-  class Anvil
-    module ClassMethods
-      def self.included(klass)
-        klass.extend self
-      end
-
-      def at(path)
-
-      end
+module SteelHammer::Anvil::ClassMethods
+  module Methods
+    def at(path)
+      Anvil.new
     end
+  end
 
-    include ClassMethods
+  def self.included(klass)
+    klass.extend Methods
   end
 end

@@ -16,17 +16,15 @@ module SteelHammer
   include_helpers
 
   def include_class_methods
-    #require "#{self.name.steel_hammer_path}/class_methods"
-    #eval("include #{self.name}::ClassMethods")
-    include_special_methods :class
+    include_special_stuff :class_methods
   end
 
   def include_instance_methods
-    include_special_methods :instance
+    include_special_stuff :instance_methods
   end
 
-  def include_special_methods(kind)
-    require "#{self.name.steel_hammer_path}/#{kind.to_s.downcase}_methods"
-    eval("include #{self.name}::#{kind.to_s.downcase.capitalize}Methods")
+  def include_special_stuff(kind)
+    require "#{self.name.steel_hammer_path}/#{kind.to_s.downcase}"
+    eval("include #{self.name}::#{kind.to_s.steel_hammer_class_name}")
   end
 end
