@@ -1,21 +1,19 @@
 module SteelHammer
-  def self.setup_autoload
-    current_path = File.dirname(__FILE__)
+  @@current_path = File.dirname(__FILE__)
+  $LOAD_PATH.unshift(@@current_path)
 
-    $LOAD_PATH.unshift(current_path)
-
+  def self.include_helpers
     autoload :Helpers, 'steel_hammer/helpers.rb'
-    autoload :StringAddons, 'steel_hammer/helpers/string_addons.rb'
     include Helpers
-    include StringAddons
+  end
 
-    Dir["#{current_path}/*.rb"].each do |f|
-      autoload f.steel_hammer_class_name.to_sym, f
+  def self.included(base)
+    Dir["#{@@current_path}/*.rb"].each do |f|
+      eval "autoload :#{f.steel_hammer_class_name}, '#{f}'"
     end
-    #autoload :Anvil, 'steel_hammer/anvil.rb'
   end
   
-  setup_autoload
+  include_helpers
 
   def include_class_methods
     name = []
