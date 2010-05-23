@@ -15,16 +15,13 @@ module SteelHammer
   
   include_helpers
 
-  def include_class_methods
-    include_special_stuff :class_methods
+  def steel_hammer_include(what)
+    require "#{self.name.steel_hammer_path}/#{what.to_s.downcase}"
+    eval("include #{self.name}::#{what.to_s.steel_hammer_class_name}")
   end
 
-  def include_instance_methods
-    include_special_stuff :instance_methods
-  end
-
-  def include_special_stuff(kind)
-    require "#{self.name.steel_hammer_path}/#{kind.to_s.downcase}"
-    eval("include #{self.name}::#{kind.to_s.steel_hammer_class_name}")
+  def method_missing(name, *args, &block)
+    super unless /^steel_hammer_include_/ =~ name
+    steel_hammer_include name.to_s.gsub("steel_hammer_include_", '')
   end
 end

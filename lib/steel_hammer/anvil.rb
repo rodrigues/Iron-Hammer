@@ -1,4 +1,4 @@
 class SteelHammer::Anvil
-  include_class_methods
-  include_instance_methods
+  steel_hammer_include_class_methods
+  steel_hammer_include_instance_methods
 end
