@@ -28,7 +28,7 @@ module SteelHammer::Helpers::FileSystemWrapper
 
       @extension ||= self.
         fullname_without_path.
-        gsub!(%r{^.+\.([^\.]*)$}, '\1')
+        gsub(%r{^.+\.([^\.]*)$}, '\1')
     end
 
     def contents
