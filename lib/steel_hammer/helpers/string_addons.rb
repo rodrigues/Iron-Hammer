@@ -2,11 +2,16 @@ module SteelHammer::Helpers::StringAddons
   def self.included(base)
     String.class_eval do
       def steel_hammer_class_name 
-        self.
+        result = self.
           gsub(%r{.*/}, '').
           gsub('.rb', '').
-          gsub(%r{_([^_])}, "\1").
           capitalize
+
+        while index = /_[^_]/ =~ result
+          result[index, 2] = result[index + 1].upcase
+        end
+
+        result
       end
       
       def steel_hammer_path
