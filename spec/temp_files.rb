@@ -2,7 +2,7 @@ require 'fileutils'
 
 module TempFiles
   @@current_path = File.dirname(__FILE__)
-  
+
   SHIT = 'shit__' # [S]teel [H]ammer [I]ntegration [T]ests
 
   def clean_temp
@@ -12,30 +12,15 @@ module TempFiles
 
   def temp_root
     @@temp_path ||= ENV['TEMP'] || 
-                     (File.directory?('/tmp') && '/tmp') || 
-                     (File.directory?('/var/tmp') && '/var/tmp') ||
-                     (raise RuntimeError.new 'could not locate temp folder')
+      (File.directory?('/tmp') && '/tmp') || 
+      (File.directory?('/var/tmp') && '/var/tmp') ||
+      (raise RuntimeError.new 'could not locate temp folder')
   end
 
   def sandbox_root
     @@sandbox_root ||= File.join(self.temp_root, SHIT)
   end
 
-  def empty_file_at(path)
-    inside_sandbox do
-      FileUtils.touch path
-    end
-  end
-
-  def file_at(path, contents)
-    inside_sandbox do
-      File.open(path, 'w') {|f| f.write contents }
-    end
-  end
-
-  def inside_sandbox
-    Dir.chdir(self.sandbox_root) do
-      yield if block_given?
-    end
-  end
+  require File.join(@@current_path, 'steel_hammer/temp_files/inside_sandbox.rb')
+  include InsideSandbox
 end
