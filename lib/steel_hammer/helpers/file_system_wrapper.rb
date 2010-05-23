@@ -37,23 +37,30 @@ module SteelHammer::Helpers::FileSystemWrapper
         gsub(%r{^.+\.([^\.]*)$}, '\1')
     end
 
+    def directory?
+      self.type == :directory
+    end
+
     def contents
+      return File.read @path unless self.directory?
       Dir[File.join(@path, '*')].collect {|f| FileSystemEntry.new f }
     end
 
     self.instance_methods(false).select {|x| x != :inside_sandbox }.each do |name|
       self.send(
         :alias_method, 
-        "#{name}_with_unsafe_current_dir".to_sym, 
+        "with_unsafe_current_dir_#{name}".to_sym, 
         name.to_sym)
       eval %[
         def #{name.to_s}(*args)
           Dir.chdir(@current_directory) do
-            self.#{name.to_s}_with_unsafe_current_dir(*args)
+            self.with_unsafe_current_dir_#{name.to_s} *args
           end
         end
       ]
     end
+
+    alias :content :contents
   end
 
   def self.included(base)

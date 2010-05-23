@@ -57,6 +57,13 @@ describe FileSystemEntry do
       it "should return its contents" do
         @file.contents.should == "foobar\nbaz"
       end
+
+      it "should return an empty string when the file is empty" do
+        empty_file_at 'file2.txt'
+        inside_sandbox do
+          FileSystemEntry.at('file2.txt').content.should == ''
+        end
+      end
     end
 
     context "when it is a directory" do
