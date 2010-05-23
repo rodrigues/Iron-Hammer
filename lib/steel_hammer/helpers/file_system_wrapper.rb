@@ -3,7 +3,8 @@ module SteelHammer::Helpers::FileSystemWrapper
     attr_accessor :path
 
     def self.at(path)
-      Dir[File.join(path, '*')].collect {|f| FileSystemEntry.new f }
+      #Dir[File.join(path, '*')].collect {|f| FileSystemEntry.new f }
+      FileSystemEntry.new path
     end
 
     def initialize(path)
