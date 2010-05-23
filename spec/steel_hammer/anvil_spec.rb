@@ -14,6 +14,7 @@ describe Anvil do
   it "should provide a list with all files" do
     anvil = Anvil.at "location"
 
+    # TODO - Fix this test
     FileSystemWrapper.
       should_receive(:contents_of).
       with("location").

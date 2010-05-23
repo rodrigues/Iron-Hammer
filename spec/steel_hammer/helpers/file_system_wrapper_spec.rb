@@ -43,30 +43,58 @@ describe FileSystemEntry do
   end
 
   context "listing the contents of the current entry" do
-    before(:each) do
-      clean_temp
-      empty_file_at 'file1.txt'
-      empty_file_at 'file2.rb'
-      empty_folder_at 'folder1'
-      inside_sandbox { @entry = FileSystemEntry.at '.' }
-    end
+    context "when it is a file" do
+      before(:each) do
+        clean_temp
+        file_at 'file1.txt', "foobar\nbaz"
+        inside_sandbox { @file = FileSystemEntry.at 'file1.txt' }
+      end
 
-    it "should work if the current directory is not messed with" do
-      inside_sandbox do
-        @entry.contents.select {|e| e.name == 'file1' }.should_not be_empty
-        @entry.contents.select {|e| e.name == 'file2' }.should_not be_empty
+      it "should have a 'file' type" do
+        @file.type.should == :file  
+      end
+
+      it "should return its contents" do
+        @file.contents.should == "foobar\nbaz"
       end
     end
 
-    it "should work even if the current directory is messed with" do
-      Dir.chdir(File.dirname(__FILE__)) do
-        @entry.contents.select {|e| e.name == 'file1' }.should_not be_empty
-        @entry.contents.select {|e| e.name == 'file2' }.should_not be_empty
+    context "when it is a directory" do
+      before(:each) do
+        clean_temp
+        empty_file_at 'file1.txt'
+        empty_file_at 'file2.rb'
+        empty_folder_at 'folder1'
+        inside_sandbox { @directory = FileSystemEntry.at '.' }
       end
-    end
 
-    it "should include the folders" do
-      @entry.contents.select {|e| e.name == 'folder1' }.should_not be_empty
+      it "should have a 'directory' type" do
+        @directory.type.should == :directory  
+      end
+
+      it "should return an empty list when it is empty" do
+        inside_sandbox do
+          FileSystemEntry.at('folder1').contents.should be_empty
+        end
+      end
+
+      it "should work if the current directory is not messed with" do
+        inside_sandbox do
+          @directory.contents.select {|e| e.name == 'file1' }.should_not be_empty
+          @directory.contents.select {|e| e.name == 'file2' }.should_not be_empty
+        end
+      end
+
+      it "should work even if the current directory is messed with" do
+        Dir.chdir(File.dirname(__FILE__)) do
+          @directory.contents.select {|e| e.name == 'file1' }.should_not be_empty
+          @directory.contents.select {|e| e.name == 'file2' }.should_not be_empty
+        end
+      end
+
+      it "should include the folders" do
+        @directory.contents.select {|e| e.name == 'folder1' }.should_not be_empty
+      end
     end
   end
 end

@@ -15,16 +15,22 @@ module SteelHammer::Helpers::FileSystemWrapper
       @path.gsub(/\\+/, "/").split("/").last
     end
 
+    def type
+      File.directory?(@path) ?
+        :directory :
+        :file
+    end
+
     def name
       @name ||= self.fullname_without_path 
       
-      return @name if File.directory? @path 
+      return @name if self.type == :directory
       
       @name.gsub!(%r{^(.+)\.[^\.]*$}, '\1')
     end
 
     def extension
-      return nil if File.directory? @path 
+      return nil if self.type == :directory
 
       @extension ||= self.
         fullname_without_path.
