@@ -1,8 +1,15 @@
 module SteelHammer
-  $LOAD_PATH.unshift(File.dirname(__FILE__))
+  def self.setup_autoload
+    current_path = File.dirname(__FILE__)
 
-  autoload :Anvil, 'steel_hammer/anvil/class_methods.rb'
-  autoload :Anvil, 'steel_hammer/anvil.rb'
+    $LOAD_PATH.unshift(current_path)
+
+    Dir["#{current_path}/*.rb"].each do 
+      autoload :Anvil, 'steel_hammer/anvil.rb'
+    end
+  end
+  
+  setup_autoload
 
   def include_class_methods
     name = []

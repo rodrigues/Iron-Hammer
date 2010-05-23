@@ -1,4 +1,3 @@
-puts "foo"
 module SteelHammer
   class Anvil
     module ClassMethods
