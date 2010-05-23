@@ -20,4 +20,22 @@ module TempFiles
   def sandbox_root
     @@sandbox_root ||= File.join(self.temp_root, SHIT)
   end
+
+  def empty_file_at(path)
+    inside_sandbox do
+      FileUtils.touch path
+    end
+  end
+
+  def file_at(path, contents)
+    inside_sandbox do
+      File.open(path, 'w') {|f| f.write contents }
+    end
+  end
+
+  def inside_sandbox
+    Dir.chdir(self.sandbox_root) do
+      yield if block_given?
+    end
+  end
 end
