@@ -9,3 +9,4 @@ empty_folder_at 'xfqwe/asdxcb'
 inside_sandbox do
   FileUtils.touch 'within'
 end
+puts InsideSandbox.instance_methods(false)

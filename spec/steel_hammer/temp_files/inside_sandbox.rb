@@ -25,7 +25,7 @@ module TempFiles::InsideSandbox
     end
   end
 
-  self.instance_methods.select {|x| x != :inside_sandbox }.each do |name|
+  self.instance_methods(false).select {|x| x != :inside_sandbox }.each do |name|
     self.send(
       :alias_method, 
       "#{name}_outside_sandbox".to_sym, 
