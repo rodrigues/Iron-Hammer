@@ -6,14 +6,14 @@ module SteelHammer::Helpers
     include StringAddons
 
     Dir["#{@@current_path}/helpers/*.rb"].each do |f|
-      class_name = f.steel_hammer_class_name
+      next if f.steel_hammer_class_name == 'StringAddons'
 
       eval "autoload :#{f.steel_hammer_class_name}, '#{f}'"
 
       inclusion = "include #{f.steel_hammer_class_name}"
 
-      eval(inclusion) unless class_name == 'StringAddons'
-      base.instance_eval(inclusion) unless class_name == 'StringAddons'
+      eval(inclusion)
+      base.instance_eval(inclusion)
     end
   end
 end
