@@ -4,14 +4,15 @@ module SteelHammer
 
     $LOAD_PATH.unshift(current_path)
 
-    Dir["#{current_path}/*.rb"].each do 
-      nil
-    end
-    autoload :Anvil, 'steel_hammer/anvil.rb'
     autoload :Helpers, 'steel_hammer/helpers.rb'
     autoload :StringAddons, 'steel_hammer/helpers/string_addons.rb'
     include Helpers
     include StringAddons
+
+    Dir["#{current_path}/*.rb"].each do |f|
+      autoload f.steel_hammer_class_name.to_sym, f
+    end
+    #autoload :Anvil, 'steel_hammer/anvil.rb'
   end
   
   setup_autoload
