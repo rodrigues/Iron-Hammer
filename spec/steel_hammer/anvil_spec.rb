@@ -15,7 +15,7 @@ describe Anvil do
     anvil = Anvil.at "location"
 
     FileSystemWrapper.
-      should_receive(:all).
+      should_receive(:contents_of).
       with("location").
       and_return(:expected_result)
 

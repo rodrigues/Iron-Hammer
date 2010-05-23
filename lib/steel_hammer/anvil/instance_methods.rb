@@ -1,5 +1,5 @@
 module SteelHammer::Anvil::InstanceMethods
   def contents
-    self.file_system.all @path
+    self.file_system.contents_of @path
   end
 end
