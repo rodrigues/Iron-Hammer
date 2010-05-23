@@ -16,11 +16,12 @@ module SteelHammer
   include_helpers
 
   def include_class_methods
-    name = []
-    self.name.scan(/([A-Z][^A-Z]*)/) { |e| e.each { |x| name << "_#{x.downcase}" } } 
+    #name = []
+    #self.name.scan(/([A-Z][^A-Z]*)/) { |e| e.each { |x| name << "_#{x.downcase}" } } 
 
-    require "#{name.inject('', &:+)[1..-1]}/class_methods".gsub(%r(/_|::_), '/')
+    #require "#{name.inject('', &:+)[1..-1]}/class_methods".gsub(%r(/_|::_), '/')
 
+    require "#{self.name.steel_hamer_path}/class_methods"
     eval("include #{self.name}::ClassMethods")
   end
 end
