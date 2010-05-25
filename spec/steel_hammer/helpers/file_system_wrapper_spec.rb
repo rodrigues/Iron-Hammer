@@ -3,18 +3,24 @@ require File.expand_path('spec/spec_helper')
 describe FileSystemEntry do
   before(:each) { clean_temp }
 
-  it "should be named after the starting point directory" do
-    inside_sandbox do
-      entry = FileSystemEntry.at '.'
-      entry.name.should == "."
-    end
-  end
+  describe ".name" do
+    context "when it is a file" do
+      let(:a_file) do
+        empty_file_at 'foo.bar.txt'
+        inside_sandbox { FileSystemEntry.at 'foo.bar.txt' } 
+      end 
 
-  it "should be named after a file" do
-    inside_sandbox do
-      empty_file_at 'foo.bar.txt'
-      entry = FileSystemEntry.at 'foo.bar.txt'
-      entry.name.should == "foo.bar"
+      subject { a_file }
+
+      its(:name} { should == "foo.bar" }
+    end
+  
+    context "when it is a directory" do
+      let(:a_directory) { inside_sandbox { FileSystemEntry.at '.' } } 
+
+      subject { a_directory }
+
+      its(:name} { should == "." }
     end
   end
 
