@@ -12,7 +12,7 @@ describe FileSystemEntry do
 
       subject { a_file }
 
-      its(:name} { should == "foo.bar" }
+      its(:name) { should == "foo.bar" }
     end
   
     context "when it is a directory" do
@@ -20,7 +20,7 @@ describe FileSystemEntry do
 
       subject { a_directory }
 
-      its(:name} { should == "." }
+      its(:name) { should == "." }
     end
   end
 

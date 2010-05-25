@@ -20,9 +20,8 @@ module SteelHammer::Helpers::FileSystemWrapper
     end
 
     def name
-      @name ||= self.fullname_without_path 
-      return @name if self.type == :directory
-      @name.gsub!(%r{^(.+)\.[^\.]*$}, '\1')
+      aux = self.fullname_without_path 
+      @name ||= self.directory? ? aux : aux.gsub(%r{^(.+)\.[^\.]*$}, '\1')
     end
 
     def extension
