@@ -45,15 +45,15 @@ describe FileSystemEntry do
   describe "#contents" do
     context "when it is a file" do
       context "when it has contents" do
-        let(:single_file) do
+        let(:a_file) do
           clean_temp
           file_at 'file1.txt', "foobar\nbaz"
           inside_sandbox { FileSystemEntry.at 'file1.txt' }
         end
 
-        subject { single_file }
+        subject { a_file }
 
-        its(:type) { should == :file }
+        its(:type) { should == :file } #TODO move this somewhere else
         its(:contents) { should == "foobar\nbaz" }
         its(:content) { should == "foobar\nbaz" }
       end
@@ -73,41 +73,22 @@ describe FileSystemEntry do
     end
 
     context "when it is a directory" do
-      before(:each) do
-        clean_temp
+      let(:a_directory) do
         empty_file_at 'file1.txt'
         empty_file_at 'file2.rb'
         empty_folder_at 'folder1'
-        inside_sandbox { @directory = FileSystemEntry.at '.' }
+        inside_sandbox { FileSystemEntry.at '.' }
       end
 
-      it "should have a 'directory' type" do
-        @directory.type.should == :directory  
-      end
+      subject { a_directory }
 
-      it "should return an empty list when it is empty" do
-        inside_sandbox do
-          FileSystemEntry.at('folder1').contents.should be_empty
-        end
-      end
+      its(:type) { should == :directory } #TODO move this somewhere else
+      its(:contents) { should_not be_empty }
+      its(:content) { should_not be_empty }
 
-      it "should work if the current directory is not messed with" do
-        inside_sandbox do
-          @directory.contents.select {|e| e.name == 'file1' }.should_not be_empty
-          @directory.contents.select {|e| e.name == 'file2' }.should_not be_empty
-        end
-      end
-
-      it "should work even if the current directory is messed with" do
-        Dir.chdir(File.dirname(__FILE__)) do
-          @directory.contents.select {|e| e.name == 'file1' }.should_not be_empty
-          @directory.contents.select {|e| e.name == 'file2' }.should_not be_empty
-        end
-      end
-
-      it "should include the folders" do
-        @directory.contents.select {|e| e.name == 'folder1' }.should_not be_empty
-      end
+      specify { subject.contents.select {|e| e.name == "file1"}.should_not be_empty }
+      specify { subject.contents.select {|e| e.name == "file2"}.should_not be_empty }
+      specify { subject.contents.select {|e| e.name == 'folder1'}.should_not be_empty }
     end
   end
 end
