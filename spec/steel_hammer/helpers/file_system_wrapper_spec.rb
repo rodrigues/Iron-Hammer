@@ -46,7 +46,6 @@ describe FileSystemEntry do
     context "when it is a file" do
       context "when it has contents" do
         let(:a_file) do
-          clean_temp
           file_at 'file1.txt', "foobar\nbaz"
           inside_sandbox { FileSystemEntry.at 'file1.txt' }
         end
@@ -60,7 +59,6 @@ describe FileSystemEntry do
 
       context "when it is empty" do
         let(:empty_file) do
-          clean_temp
           empty_file_at 'file2.txt'
           inside_sandbox { FileSystemEntry.at 'file2.txt' }
         end
@@ -90,7 +88,10 @@ describe FileSystemEntry do
         specify { subject.contents.select {|e| e.name == "file1"}.should_not be_empty }
         specify { subject.contents.select {|e| e.name == "file2"}.should_not be_empty }
       end
-      specify { subject.contents.select {|e| e.name == 'folder1'}.should_not be_empty }
+
+      context "when listing folders" do
+        specify { subject.contents.select {|e| e.name == 'folder1'}.should_not be_empty }
+      end
     end
   end
 end
