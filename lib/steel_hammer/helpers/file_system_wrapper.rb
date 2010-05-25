@@ -16,9 +16,7 @@ module SteelHammer::Helpers::FileSystemWrapper
     end
 
     def type
-      File.directory?(@path) ?
-        :directory :
-        :file
+      File.directory?(@path) ? :directory : :file
     end
 
     def name
