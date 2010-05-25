@@ -86,8 +86,10 @@ describe FileSystemEntry do
       its(:contents) { should_not be_empty }
       its(:content) { should_not be_empty }
 
-      specify { subject.contents.select {|e| e.name == "file1"}.should_not be_empty }
-      specify { subject.contents.select {|e| e.name == "file2"}.should_not be_empty }
+      context "when listing files" do
+        specify { subject.contents.select {|e| e.name == "file1"}.should_not be_empty }
+        specify { subject.contents.select {|e| e.name == "file2"}.should_not be_empty }
+      end
       specify { subject.contents.select {|e| e.name == 'folder1'}.should_not be_empty }
     end
   end
