@@ -27,15 +27,14 @@ module TempFiles::InsideSandbox
 
   self.instance_methods(false).select {|x| x != :inside_sandbox }.each do |name|
     self.send(
-      :alias_method, 
-      "#{name}_outside_sandbox".to_sym, 
+      :alias_method,
+      "#{name}_outside_sandbox".to_sym,
       name.to_sym)
-    eval %[
-      def #{name.to_s}(*args)
+
+      define_method name.to_s do |*args|
         self.inside_sandbox do
-          self.#{name.to_s}_outside_sandbox(*args)
+          send "#{name.to_s}_outside_sandbox",*args
         end
       end
-    ]
   end
 end
