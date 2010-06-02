@@ -21,6 +21,6 @@ module TempFiles
     @@sandbox_root ||= File.join(self.temp_root, SHIT)
   end
 
-  require File.join(@@current_path, 'steel_hammer/temp_files/inside_sandbox.rb')
+  require File.join(@@current_path, 'temp_files', 'inside_sandbox.rb')
   include InsideSandbox
 end
