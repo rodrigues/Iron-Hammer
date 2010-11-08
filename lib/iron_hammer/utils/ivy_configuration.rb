@@ -17,9 +17,9 @@ module IronHammer
 
       private
       def initialize
-        @organisation = defined?(ORGANISATION)? ORGANISATION : 'org'
-        @ivy_jar = defined?(IVY_JAR)? IVY_JAR : 'ivy.jar'
-        @ivy_settings = defined?(IVY_SETTINGS)? IVY_SETTINGS : 'ivysettings.xml'
+        @organisation = defined?(ORGANISATION) ? ORGANISATION : 'org'
+        @ivy_jar = defined?(IVY_JAR) ? IVY_JAR : (ENV['IVY_JAR'] ? ENV['IVY_JAR'] : 'ivy.jar')
+        @ivy_settings = defined?(IVY_SETTINGS) ? IVY_SETTINGS : (ENV['IVY_SETTINGS'] ? ENV['IVY_SETTINGS'] : 'ivysettings.xml')
         @retrieve_version = ENV['retrieve_version'] || 'latest.build'
       end
 
