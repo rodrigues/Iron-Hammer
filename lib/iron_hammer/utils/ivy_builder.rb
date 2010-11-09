@@ -94,7 +94,7 @@ module IronHammer
       def self.rename_artifacts
         Dir["Libraries/*.{dll,exe}"].each do |file|
           file.scan(/Libraries\/(.*)-([\d\.]*)\.(.*)/) do |name, version, extension|
-            FileUtils.mv(file, "Libraries/#{name}.#{extension}")
+            FileUtils.mv(file, File.join("Libraries", "#{name}.#{extension}"))
           end
         end
       end
