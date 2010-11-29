@@ -2,7 +2,6 @@
 
 require 'rubygems'
 require 'rake'
-require 'iron_hammer/os/platform'
 require 'iron_hammer/configuration'
 
 sh "rake -f \"#{File.join(IronHammer::Configuration.home, 'rakefile.rb')}\" iron:ivy:#{ARGV.join ' '}" unless ARGV.empty?
