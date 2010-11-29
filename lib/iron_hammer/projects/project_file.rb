@@ -15,7 +15,7 @@ module IronHammer
       GUID_EVALUATION_ORDER = [AspNetMvcProject, AspNetProject, TestProject]
       GUID_PATH = '//Project/PropertyGroup/ProjectTypeGuids'
       ASSEMBLY_NAME_PATH = '//Project/PropertyGroup/AssemblyName'
-      REFERENCE_PATH = '//Reference[not(starts_with(@Include, "System"))]'
+      REFERENCE_PATH = '//Reference[not(starts_with(@Include, "System")) and not(starts_with(@Include, "Microsoft.CSharp"))]'
       PROJECT_REFERENCE_PATH = '//ProjectReference/Name'
 
       def self.load_from *path
