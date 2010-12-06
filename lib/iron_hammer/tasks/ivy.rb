@@ -19,7 +19,6 @@ namespace :iron do
 
     desc 'Publishes project dependencies into ivy repository'
     task :setup, [:binaries_path] do |t, args|
-
       files = Dir.new(args.binaries_path).entries
       candidates = all_dependencies.select {|x| files.include? "#{x.name}.#{x.extension}"}
 
@@ -68,6 +67,19 @@ namespace :iron do
       end
       IvyBuilder.rename_artifacts
     end
+    
+    desc "Gets a specific dependency from ivy repository but doesn't modify project csproj to reference it"
+    task :get, [:artifact, :version] do |task, args|
+      builder = IvyConfiguration.builder_for(SolutionProject.new(@anvil.solution.name, all_dependencies))
+
+      begin
+        sh builder.retrieve args.artifact, args.version
+      rescue RuntimeError
+        puts "\nThe artifact '#{args.artifact}' version '#{args.version}' not found in ivy repository"
+      end
+
+      IvyBuilder.rename_artifacts
+    end
 
     desc 'Publishes project assemblies to ivy repository (only dll projects)'
     task :publish => [:generate] do
@@ -83,4 +95,3 @@ namespace :iron do
     end
   end
 end
-

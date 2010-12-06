@@ -56,6 +56,13 @@ module IronHammer
           -retrieve Libraries/[artifact]-[revision].[ext]".gsub(/\s+/, ' ')
       end
 
+      def retrieve artifact, version
+        "java -jar #{@config.ivy_jar}
+          -dependency #{@config.organisation} #{artifact} #{version}
+          -settings #{@config.ivy_settings}
+          -retrieve Libraries/[artifact]-[revision].[ext]".gsub(/\s+/, ' ')
+      end
+
       def publish ivy_file
         "java -jar #{@config.ivy_jar}
           -ivy #{ivy_file}
