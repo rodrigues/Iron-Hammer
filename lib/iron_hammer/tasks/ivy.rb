@@ -73,7 +73,7 @@ namespace :iron do
       builder = IvyConfiguration.builder_for(SolutionProject.new(@anvil.solution.name, all_dependencies))
 
       begin
-        sh builder.retrieve args.artifact, args.version
+        sh builder.get args.artifact, args.version
       rescue RuntimeError
         puts "\nThe artifact '#{args.artifact}' version '#{args.version}' not found in ivy repository"
       end
