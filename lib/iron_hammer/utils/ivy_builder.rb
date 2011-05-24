@@ -1,5 +1,7 @@
 require 'builder'
 require 'rexml/document'
+require 'rexml/formatters/default'
+require 'stringio'
 
 module IronHammer
   module Utils
@@ -95,7 +97,10 @@ module IronHammer
             add_text([relative, "#{artifact}"].flatten.patheticalize)
         end
 
-        FileSystem.write! :path => @project.path, :name => @project.csproj, :content => doc.to_s
+        buffer = StringIO.new
+        REXML::Formatters::Default.new(true).write(doc, buffer)
+
+        FileSystem.write! :path => @project.path, :name => @project.csproj, :content => buffer.string
       end
 
       def self.rename_artifacts
