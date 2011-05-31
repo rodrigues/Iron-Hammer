@@ -50,16 +50,16 @@ module IronHammer
       end
 
       def retrieve ivy_file
-        "java -jar #{@config.ivy_jar}
+        "java -jar \"#{@config.ivy_jar}\"
           -ivy #{ivy_file}
           -settings #{@config.ivy_settings}
           -retrieve Libraries/[artifact]-[revision].[ext]".gsub(/\s+/, ' ')
       end
 
       def publish ivy_file
-        "java -jar #{@config.ivy_jar}
+        "java -jar \"#{@config.ivy_jar}\"
           -ivy #{ivy_file}
-          -settings #{@config.ivy_settings}
+          -settings \"#{@config.ivy_settings}\"
           -publish default
           -publishpattern #{@project.path_to_binaries}/[artifact].[ext]
           -revision #{@project.version}
