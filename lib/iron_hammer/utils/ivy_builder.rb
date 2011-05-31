@@ -50,10 +50,10 @@ module IronHammer
       end
 
       def retrieve ivy_file
-        %Q{java -jar "%IRON_HAMMER_HOME%/ivy.jar"
-          -ivy #{ivy_file}
-          -settings "%IRON_HAMMER_HOME%/ivysettings.xml"
-          -retrieve Libraries/[artifact]-[revision].[ext]}#.gsub(/\s+/, ' ')
+        "java -jar \"%IRON_HAMMER_HOME%/ivy.jar\"" +
+        " -ivy #{ivy_file}" +
+        " -settings \"%IRON_HAMMER_HOME%/ivysettings.xml\"" +
+        " -retrieve Libraries/[artifact]-[revision].[ext]"
       end
 
       def publish ivy_file
