@@ -58,13 +58,7 @@ namespace :iron do
       xml = "ivy-#{@anvil.solution.name}.xml"
       builder.write_to xml
 
-      retrieve_result = ''
-      begin
-        retrieve_result = `#{builder.retrieve xml}`
-      rescue error
-        puts "#{builder.retrieve xml} === === > #{retrieve_result}"
-        raise error
-      end
+      raise `#{builder.retrieve xml}`
 
       @anvil.projects.each do |project|
         builder = IvyConfiguration.builder_for project
