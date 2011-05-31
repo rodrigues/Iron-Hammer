@@ -50,9 +50,9 @@ module IronHammer
       end
 
       def retrieve ivy_file
-        "java -jar \"%IRON_HAMMER_HOME%/ivy.jar\"" +
+        "java -jar \"#{@config.ivy_jar}\"" +
         " -ivy #{ivy_file}" +
-        " -settings \"%IRON_HAMMER_HOME%/ivysettings.xml\"" +
+        " -settings \"#{@config.ivy_settings}\"" +
         " -retrieve Libraries/[artifact]-[revision].[ext]"
       end
 
