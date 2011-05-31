@@ -1,4 +1,3 @@
-
 module IronHammer
   module Configuration
 
@@ -7,7 +6,6 @@ module IronHammer
       @home = File.join(ENV['USERPROFILE'], '.IronHammer')
       print_message
       generate_config
-
       @home
     end
 
@@ -15,7 +13,7 @@ module IronHammer
     def self.generate_config
       FileUtils.mkpath @home
 
-      sh "setx IRON_HAMMER_HOME \"#{@home}\""
+      `setx IRON_HAMMER_HOME "#{@home}"`
 
       File.open(File.join(@home, 'rakefile.rb'), 'w') do |f|
         f.write default_rakefile_rb
@@ -27,20 +25,18 @@ module IronHammer
     end
 
     def self.print_message
-      puts "IRON_HAMMER_HOME environment variable not found! Generating default config on #{@home}"
-      puts "You'll need to download apache ivy from http://ant.apache.org/ivy/download.cgi"
-      puts "and copy ivy-x.x.x.jar to #{@home}\\ivy.jar"
-      puts "You can also edit #{@home}\\rakefile.rb and change any settings you want"
+      puts "IRON_HAMMER_HOME environment variable not found! Generating default config on #{@home}\
+            You'll need to download apache ivy from http://ant.apache.org/ivy/download.cgi\
+            and copy ivy-x.x.x.jar to #{@home}\\ivy.jar\
+            You can also edit #{@home}\\rakefile.rb and change any settings you want"
     end
 
     def self.default_rakefile_rb
       <<EOF
 require 'rubygems'
 
-#VISUAL_STUDIO_PATH = ENV['VISUAL_STUDIO_PATH'] || 'C:\\Program Files\\Microsoft Visual Studio 9.0\\Common7\\IDE'
 IVY_JAR = "#{ENV['IRON_HAMMER_HOME']}\\ivy.jar"
 IVY_SETTINGS = "#{ENV['IRON_HAMMER_HOME']}\\ivysettings.xml"
-#ORGANISATION = 'Your company'
 
 require 'iron_hammer/tasks'
 EOF

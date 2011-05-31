@@ -1,14 +1,11 @@
 #!/usr/bin/env ruby
 
-require 'rubygems'
-require 'rake'
 require 'iron_hammer/configuration'
 
-
-sh "rake -f \"#{IronHammer::Configuration.home}\\rakefile.rb\" iron:ivy:#{ARGV.join ' '}" unless ARGV.empty?
+`rake -f "#{IronHammer::Configuration.home}\\rakefile.rb" iron:ivy:#{ARGV.join ' '}` unless ARGV.empty?
 
 if ARGV.empty?
   puts "You must specify a target. Available targets (remove iron:ivy: prefix):"
-  sh "rake -f \"#{IronHammer::Configuration.home}\\rakefile.rb\" -T iron:ivy"
+  `rake -f "#{IronHammer::Configuration.home}\\rakefile.rb" -T iron:ivy`
 end
 
