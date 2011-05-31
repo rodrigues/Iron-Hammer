@@ -56,6 +56,13 @@ module IronHammer
         " -retrieve Libraries/[artifact]-[revision].[ext]"
       end
 
+      def get artifact, version
+        "java -jar #{@config.ivy_jar}
+          -dependency #{@config.organisation} #{artifact} #{version}
+          -settings #{@config.ivy_settings}
+          -retrieve Libraries/[artifact]-[revision].[ext]".gsub(/\s+/, ' ')
+      end
+
       def publish ivy_file
         "java -jar \"#{@config.ivy_jar}\"
           -ivy #{ivy_file}
@@ -94,7 +101,7 @@ module IronHammer
       def self.rename_artifacts
         Dir["Libraries/*.{dll,exe}"].each do |file|
           file.scan(/Libraries\/(.*)-([\d\.]*)\.(.*)/) do |name, version, extension|
-            FileUtils.mv(file, "Libraries\\#{name}.#{extension}")
+            FileUtils.mv(file, File.join("Libraries", "#{name}.#{extension}"))
           end
         end
       end

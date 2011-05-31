@@ -15,7 +15,9 @@ lib/iron_hammer/deliverables/deliverable.rb
 lib/iron_hammer/deploy/create_status.rb
 lib/iron_hammer/deploy/wmi_service.rb
 lib/iron_hammer/deploy/windows_service.rb
+lib/iron_hammer/ext/rexml_ext.rb
 lib/iron_hammer/hammer.rb
+lib/iron_hammer/os/platform.rb
 lib/iron_hammer/package.rb
 lib/iron_hammer/projects/asp_net_mvc_project.rb
 lib/iron_hammer/projects/asp_net_project.rb

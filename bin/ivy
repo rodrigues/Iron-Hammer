@@ -8,4 +8,3 @@ if ARGV.empty?
   puts "You must specify a target. Available targets (remove iron:ivy: prefix):"
   `rake -f "#{IronHammer::Configuration.home}\\rakefile.rb" -T iron:ivy`
 end
-
