@@ -52,7 +52,7 @@ module IronHammer
       def retrieve ivy_file
         "java -jar \"#{@config.ivy_jar}\"
           -ivy #{ivy_file}
-          -settings #{@config.ivy_settings}
+          -settings \"#{@config.ivy_settings}\"
           -retrieve Libraries/[artifact]-[revision].[ext]".gsub(/\s+/, ' ')
       end
 
