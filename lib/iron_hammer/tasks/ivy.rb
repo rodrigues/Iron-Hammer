@@ -58,13 +58,13 @@ namespace :iron do
       xml = "ivy-#{@anvil.solution.name}.xml"
       builder.write_to xml
 
-      raise `#{builder.retrieve xml}`
+      puts `#{builder.retrieve xml}`
 
       @anvil.projects.each do |project|
         builder = IvyConfiguration.builder_for project
-
         builder.modify_csproj
       end
+
       IvyBuilder.rename_artifacts
     end
 
