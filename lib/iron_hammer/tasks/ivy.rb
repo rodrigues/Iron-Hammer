@@ -58,7 +58,13 @@ namespace :iron do
       xml = "ivy-#{@anvil.solution.name}.xml"
       builder.write_to xml
 
-      sh builder.retrieve xml
+      retrieve_result = ''
+      begin
+        retrieve_result = `#{builder.retrieve xml}`
+      rescue error
+        puts "#{builder.retrieve xml} === === > #{retrieve_result}"
+        raise error
+      end
 
       @anvil.projects.each do |project|
         builder = IvyConfiguration.builder_for project
@@ -67,7 +73,7 @@ namespace :iron do
       end
       IvyBuilder.rename_artifacts
     end
-    
+
     desc "Gets a specific dependency from ivy repository but doesn't modify project csproj to reference it"
     task :get, [:artifact, :version] do |task, args|
       builder = IvyConfiguration.builder_for(SolutionProject.new(@anvil.solution.name, all_dependencies))
