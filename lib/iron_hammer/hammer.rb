@@ -42,7 +42,7 @@ module IronHammer
       containers = projects.collect{|project| "/testcontainer:#{project.container @configuration}"}
       results   = projects.first.results_file
       mstest    = @dot_net_environment.mstest
-      "#{mstest} #{runconfig || ''}#{containers.join ' '} /resultsfile:#{results} #{details}"
+      "\"#{mstest}\" #{runconfig || ''}#{containers.join ' '} /resultsfile:#{results} #{details}"
     end
 
     def analyze *projects
