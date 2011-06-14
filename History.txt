@@ -1,3 +1,7 @@
+=== 1.1.1 2011-05-24
+* 1 bugfix
+  * generate visual studio-like empty xml tags
+
 === 1.1.0 2010-02-26
 * 1 major
   * new task for generating coverage report (Emma style)
